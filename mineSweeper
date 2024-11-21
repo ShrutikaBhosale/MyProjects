@@ -1,0 +1,89 @@
+let grid = '';
+let prevUserPos = 1;
+
+function makeGrid() {
+  for (let index = 1; index <= 20; index++) {
+    if (index === prevUserPos) {
+      grid += '👩🏻‍💼';
+      continue;
+    }
+
+    if (index === 5 || index === 10 || index === 15 || index === 20) {
+      grid += '\n\n';
+      continue;
+    }
+    grid += '🟩';
+  }
+  return grid;
+}
+
+function finalGrid() {
+  const finalGrid = '🟩🟩🟩🟩\n\n🟩🟩🟩🟩\n\n🟩🟩🟩🟩\n\n🟩🟩🟩👩🏻‍💼\n\n';
+  return finalGrid;
+}
+
+function resetGrid(bomb1, bomb2, bomb3) {
+  let newGrid = '';
+  const currentUserPos = moveUser();
+  for (let index = 1; index <= 20; index++) {
+
+    if (currentUserPos === bomb1 || currentUserPos === bomb2 || currentUserPos === bomb3) {
+      newGrid += '💣';
+      continue;
+    }
+
+    if (index === currentUserPos) {
+      newGrid += '👩🏻‍💼';
+      continue;
+    }
+
+    if (index === 5 || index === 10 || index === 15 || index === 20) {
+      newGrid += '\n\n';
+      continue;
+    }
+
+    newGrid += '🟩';
+  }
+
+  grid = newGrid;
+  return newGrid;
+}
+
+function moveUser() {
+  const userMove = prompt('Enter your Move:');
+  if (userMove === 'R') {
+    prevUserPos += 1;
+  }
+  if (userMove === 'L') {
+    prevUserPos -= 1;
+  }
+  if (userMove === 'U') {
+    prevUserPos -= 5;
+  }
+  if (userMove === 'D') {
+    prevUserPos += 5;
+  }
+  return prevUserPos;
+}
+
+function setBomb(bomb1, bomb2, bomb3) {
+  return resetGrid(bomb1, bomb2, bomb3);
+}
+
+function welcomeMsg() {
+  console.log("WELCOME TO MINESWEEPER\n\n instructions: You have to go from one corner of field to another by ignoring mines if you found mine you need to start from first location. For moving follow below instructions  \n L -> LEFT \n R -> RIGHT \n U -> UP \n D -> DOWN \n\n")
+}
+
+function mineSweeper() {
+  welcomeMsg();
+  console.log(makeGrid());
+  const bomb1 = Math.ceil(Math.random() * 19);
+  const bomb2 = Math.ceil(Math.random() * 19);
+  const bomb3 = Math.ceil(Math.random() * 19);
+
+  while (grid !== finalGrid()) {
+    console.log(setBomb(bomb1, bomb2, bomb3));
+  }
+}
+
+mineSweeper();
