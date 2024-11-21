@@ -5,15 +5,12 @@ function makeGame() {
 
   if (confirm("You want to join?")) {
     const name = prompt("Enter your Name:");
-    let alreadyFinishedQue = '';
     console.log('\n 🤩 LEVEL 1 🤩 ');
-    level1(alreadyFinishedQue);
-    alreadyFinishedQue = '';
+    level1();
     console.log('\n\n Lets Play \n 🤩 LEVEL 2 🤩');
-    level2(alreadyFinishedQue);
-    alreadyFinishedQue = '';
+    level2();
     console.log('\n \n Lets Play \n 🤩 LEVEL 3 🤩');
-    level3(alreadyFinishedQue);
+    level3();
 
     console.log("\n 🎉🥳🎊🎁 Congratulations!!" + name);
     console.log(" 🎉🥳🎊🎁 \n Your Score : ", score);
@@ -71,12 +68,6 @@ function level1(alreadyFinishedQue) {
     let ans = 'egg';
     const queNum = Math.ceil((Math.random() * 7));
 
-    if (isAlreadyDone(queNum, alreadyFinishedQue, 0)) {
-      level1(alreadyFinishedQue);
-    }
-
-    alreadyFinishedQue += queNum;
-
     switch (queNum) {
       case 0:
         riddle = 'What has to be broken before you can use it?';
@@ -114,13 +105,6 @@ function level2(alreadyFinishedQue) {
     let riddle = 'What goes up and down but doesn’t move?';
     let ans = 'staircase';
     const queNum = Math.ceil((Math.random() * 7));
-
-    if (isAlreadyDone(queNum, alreadyFinishedQue, 0)) {
-      level2(alreadyFinishedQue);
-    }
-
-    alreadyFinishedQue += queNum;
-    console.log(alreadyFinishedQue, alreadyFinishedQue.length);
 
     switch (queNum) {
       case 0:
@@ -161,10 +145,6 @@ function level3(alreadyFinishedQue) {
     let ans = 'silence';
     const queNum = Math.ceil((Math.random() * 7));
 
-    if (isAlreadyDone(queNum, alreadyFinishedQue, 0)) {
-      level3(alreadyFinishedQue);
-    }
-
     switch (queNum) {
       case 0:
         riddle = 'What disappears as soon as you say its name?';
@@ -191,7 +171,6 @@ function level3(alreadyFinishedQue) {
         ans = 'candle';
         break;
     }
-    alreadyFinishedQue += queNum;
     addWord(riddle, ans, 3);
   }
 
