@@ -1,6 +1,6 @@
 let grid = '';
 let prevUserPos = 1;
-let msg = '';
+let score = 1;
 
 function makeGrid() {
   for (let index = 1; index <= 20; index++) {
@@ -24,14 +24,14 @@ function finalGrid() {
   return finalGrid;
 }
 
-function resetGrid(bomb1, bomb2, bomb3) {
+function resetGrid(bomb1, bomb2, bomb3, bomb4) {
   let newGrid = '';
   const currentUserPos = moveUser();
   for (let index = 1; index <= 20; index++) {
-
     if (currentUserPos === bomb1 || currentUserPos === bomb2 || currentUserPos === bomb3) {
       grid = finalGrid();
-      return "There is a bomb💣";
+      score = 0;
+      return "💣 There is a bomb 💣";
     }
 
     if (index === currentUserPos) {
@@ -68,8 +68,8 @@ function moveUser() {
   return prevUserPos;
 }
 
-function setBomb(bomb1, bomb2, bomb3) {
-  console.log(resetGrid(bomb1, bomb2, bomb3));
+function setBomb(bomb1, bomb2, bomb3, bomb4) {
+  console.log(resetGrid(bomb1, bomb2, bomb3, bomb4));
 }
 
 function welcomeMsg() {
@@ -83,9 +83,13 @@ function mineSweeper() {
   const bomb1 = Math.ceil(Math.random() * 19);
   const bomb2 = Math.ceil(Math.random() * 19);
   const bomb3 = Math.ceil(Math.random() * 19);
+  const bomb4 = Math.ceil(Math.random() * 19);
 
   while (grid !== finalGrid()) {
-    setBomb(bomb1, bomb2, bomb3);
+    setBomb(bomb1, bomb2, bomb3, bomb4);
+  }
+  if (score === 1) {
+    console.log("🎊🥳 Congratulations 🎊🥳 \n You Won");
   }
 }
 
