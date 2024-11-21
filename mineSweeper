@@ -1,5 +1,6 @@
 let grid = '';
 let prevUserPos = 1;
+let msg = '';
 
 function makeGrid() {
   for (let index = 1; index <= 20; index++) {
@@ -12,6 +13,7 @@ function makeGrid() {
       grid += '\n\n';
       continue;
     }
+
     grid += '🟩';
   }
   return grid;
@@ -28,8 +30,8 @@ function resetGrid(bomb1, bomb2, bomb3) {
   for (let index = 1; index <= 20; index++) {
 
     if (currentUserPos === bomb1 || currentUserPos === bomb2 || currentUserPos === bomb3) {
-      newGrid += '💣';
-      continue;
+      grid = finalGrid();
+      return "There is a bomb💣";
     }
 
     if (index === currentUserPos) {
@@ -67,7 +69,7 @@ function moveUser() {
 }
 
 function setBomb(bomb1, bomb2, bomb3) {
-  return resetGrid(bomb1, bomb2, bomb3);
+  console.log(resetGrid(bomb1, bomb2, bomb3));
 }
 
 function welcomeMsg() {
@@ -77,12 +79,13 @@ function welcomeMsg() {
 function mineSweeper() {
   welcomeMsg();
   console.log(makeGrid());
+
   const bomb1 = Math.ceil(Math.random() * 19);
   const bomb2 = Math.ceil(Math.random() * 19);
   const bomb3 = Math.ceil(Math.random() * 19);
 
   while (grid !== finalGrid()) {
-    console.log(setBomb(bomb1, bomb2, bomb3));
+    setBomb(bomb1, bomb2, bomb3);
   }
 }
 
