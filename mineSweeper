@@ -1,4 +1,4 @@
-let grid = '';
+let grid = '        ';
 let prevUserPos = 1;
 let score = 1;
 
@@ -10,28 +10,50 @@ function makeGrid() {
     }
 
     if (index === 5 || index === 10 || index === 15 || index === 20) {
-      grid += '\n\n';
+      grid += '\n\n        ';
       continue;
     }
 
     grid += '🟩';
   }
+
   return grid;
 }
 
 function finalGrid() {
-  const finalGrid = '🟩🟩🟩🟩\n\n🟩🟩🟩🟩\n\n🟩🟩🟩🟩\n\n🟩🟩🟩👩🏻‍💼\n\n';
+  const finalGrid = '        🟩🟩🟩🟩\n\n        🟩🟩🟩🟩\n\n        🟩🟩🟩🟩\n\n        🟩🟩🟩👩🏻‍💼\n\n        ';
   return finalGrid;
 }
 
+function setBombInField(currentUserPos) {
+  let newGrid = '        ';
+  const msg = '\n\nThere is a Bomb 💣';
+  for (let index = 1; index <= 20; index++) {
+    if (index === currentUserPos) {
+      newGrid += '💣';
+      continue;
+    }
+
+    if (index === 5 || index === 10 || index === 15 || index === 20) {
+      newGrid += '\n\n        ';
+      continue;
+    }
+
+    newGrid += '🟩';
+  }
+
+  return newGrid + msg;
+}
+
 function resetGrid(bomb1, bomb2, bomb3, bomb4) {
-  let newGrid = '';
+  let newGrid = '        ';
   const currentUserPos = moveUser();
+
   for (let index = 1; index <= 20; index++) {
     if (currentUserPos === bomb1 || currentUserPos === bomb2 || currentUserPos === bomb3) {
       grid = finalGrid();
       score = 0;
-      return "💣 There is a bomb 💣";
+      return setBombInField(currentUserPos);
     }
 
     if (index === currentUserPos) {
@@ -40,7 +62,7 @@ function resetGrid(bomb1, bomb2, bomb3, bomb4) {
     }
 
     if (index === 5 || index === 10 || index === 15 || index === 20) {
-      newGrid += '\n\n';
+      newGrid += '\n\n        ';
       continue;
     }
 
@@ -52,7 +74,9 @@ function resetGrid(bomb1, bomb2, bomb3, bomb4) {
 }
 
 function moveUser() {
-  const userMove = prompt('Enter your Move:');
+  const userMove = prompt('    Enter your Move:');
+  console.clear();
+  welcomeMsg();
   if (userMove === 'R') {
     prevUserPos += 1;
   }
@@ -65,6 +89,7 @@ function moveUser() {
   if (userMove === 'D') {
     prevUserPos += 5;
   }
+
   return prevUserPos;
 }
 
@@ -73,7 +98,7 @@ function setBomb(bomb1, bomb2, bomb3, bomb4) {
 }
 
 function welcomeMsg() {
-  console.log("WELCOME TO MINESWEEPER\n\n instructions: You have to go from one corner of field to another by ignoring mines if you found mine you need to start from first location. For moving follow below instructions  \n L -> LEFT \n R -> RIGHT \n U -> UP \n D -> DOWN \n\n")
+  console.log("\n    🤩WELCOME TO MINESWEEPER🤩\n\n     Instructions: You have to go from one corner of field to another \n     by ignoring mines if you found mine you need to start from first location. \n\n      For moving follow below instructions      \n     L -> LEFT \n     R -> RIGHT \n     U -> UP \n     D -> DOWN \n\n")
 }
 
 function mineSweeper() {
@@ -88,9 +113,11 @@ function mineSweeper() {
   while (grid !== finalGrid()) {
     setBomb(bomb1, bomb2, bomb3, bomb4);
   }
+
   if (score === 1) {
     console.log("🎊🥳 Congratulations 🎊🥳 \n You Won");
   }
+
 }
 
 mineSweeper();
