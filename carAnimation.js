@@ -1,30 +1,36 @@
-const carSegment1 = '   _____';
-const carSegment2 = '  /|_||_\`.__';
-const carSegment3 = ' (   _    _ _\\';
-const carSegment4 = "   `-(_)--(_)-'";
-function drawRoad(numOfTimes) {
-  let repeatedString = '';
-  for (let index = 0; index <= numOfTimes; index++) {
-    repeatedString += '_';
-  }
-  console.log("\n" + repeatedString);
+function drawBuilding() {
+  const buildingSegment1 = ' __                   ___       🙋🏻‍♂️      __      /\\      __                   ___      /\\      __ ';
+  const buildingSegment2 = '|""|  ___    _   __  |"""|  __    __   |""|    / ^\\    |""|  ___    _   __  |"""|    / ^\\    |""|  ___';
+  const buildingSegment3 = '|""| |"""|  |"| |""| |"""| |""|  |""|  |""|   /^   \\   |""| |"""|  |"| |""| |"""|   /^   \\   |""| |"""|';
+  const buildingSegment4 = '|""| |"""|  |"| |""| |"""| |""|  |""|  |""|  /  ^ ^ \\  |""| |"""|  |"| |""| |"""|  /  ^ ^ \\  |""| |"""|';
+  const buildingSegment5 = '|""| |"""|  |"| |""| |"""| |""|  |""|  |""| / ^ ^  ^ \\ |""| |"""|  |"| |""| |"""| / ^ ^  ^ \\ |""| |"""|';
+
+  console.log("\n\n\n\n\n" + buildingSegment1 + '\n' + buildingSegment2 + '\n' + buildingSegment3 + '\n' + buildingSegment4 + '\n' + buildingSegment5);
 }
 
-function makeBackground() {
-  const buildingSegment1 = ' ┏━━━━━━┓\n';
-  const buildingSegment2 = ' ┃ ┃  ┃ ┃\n'
-  const buildingSegment3 = ' ┃ ┃  ┃ ┃\n'
-  const buildingSegment4 = ' ┃ ┃  ┃ ┃\n'
-  const buildingSegment5 = ' ┗━━━━━━┛\n';
-  console.log(buildingSegment1 + buildingSegment2 + buildingSegment3 + buildingSegment4 + buildingSegment5);
+function repeat(char, numOfTimes) {
+  let repeatedString = '';
+  for (let index = 0; index < numOfTimes; index++) {
+    repeatedString += char;
+  }
+
+  return repeatedString;
+}
+
+function drawRoad(numOfTimes) {
+  let roadSegment1 = repeat('━', 125) + '⛳️' + "\n";
+  let roadSegment2 = repeat('   ━━   ', 16);
+  let roadSegment3 = repeat('━', 125) + "\n";
+  console.log(roadSegment1 + roadSegment2 + roadSegment3);
 }
 
 function moveCar() {
-  for (let index = 1; index <= 20; index++) {
+  for (let index = 1; index <= 21.5; index += 0.5) {
     console.clear();
-    console.log("     ----------------CAR RACE-------------\n");
-    makeBackground();
-    moveHorizontal(index, carSegment1, carSegment2, carSegment3, carSegment4, '');
+    drawBuilding();
+
+    moveHorizontal(index);
+    drawRoad();
     delay(1);
   }
 }
@@ -33,14 +39,18 @@ function animate() {
   moveCar();
 }
 
-function moveHorizontal(numOfTimes, car1, car2, car3, car4) {
-  let newLines = '';
+function moveHorizontal(numOfTimes) {
+  let spaces = '';
+  const carSegment1 = '   _____';
+  const carSegment2 = '  /|_||👩🏻‍💼\`.__';
+  const carSegment3 = ' (   _    _ _\\';
+  const carSegment4 = "   `- (_)--(_) ";
 
   for (let index = 1; index <= numOfTimes; index++) {
-    newLines += '     ';
+    spaces += '     ';
   }
 
-  console.log(newLines + car1 + '\n' + newLines + car2 + '\n' + newLines + car3 + '\n' + newLines + car4);
+  console.log(spaces + carSegment1 + '\n' + spaces + carSegment2 + '\n' + spaces + carSegment3 + '\n' + spaces + carSegment4);
 }
 
 function delay(time) {
