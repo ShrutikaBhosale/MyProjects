@@ -18,9 +18,9 @@ function repeat(char, numOfTimes) {
 }
 
 function drawRoad(numOfTimes) {
-  let roadSegment1 = repeat('━', 125) + '⛳️' + "\n";
-  let roadSegment2 = repeat('   ━━   ', 16);
-  let roadSegment3 = repeat('━', 125) + "\n";
+  let roadSegment1 = repeat('━', 140) + '⛳️' + "\n";
+  let roadSegment2 = repeat('   ━━   ', 18) + "\n";
+  let roadSegment3 = repeat('━', 140) + "\n";
   console.log(roadSegment1 + roadSegment2 + roadSegment3);
 }
 
