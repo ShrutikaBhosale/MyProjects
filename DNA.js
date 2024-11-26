@@ -1,5 +1,5 @@
-const redCircle = '🟠';
-const yellowCircle = '🟢';
+const orangeCircle = '🔴';
+const greenCircle = '🔵';
 
 function delay(time) {
   for (let counter = 0; counter <= 100000000; counter++) {
@@ -8,42 +8,33 @@ function delay(time) {
 
   return time;
 }
+
 function getCooardinate(x, amplitude, frequency, phase) {
   return Math.round(amplitude * Math.sin(x / frequency) + phase);
 }
 
-function drawLine(numOfTimes) {
-  const string = '';
+function repeat(char, numOfTimes) {
+  let repeatedString = '';
   for (let index = 0; index < numOfTimes; index++) {
-    string += ' ';
+    repeatedString += char;
   }
-  return string;
+
+  return repeatedString;
 }
 
 function findCoordinates() {
-  for (let index = 0; index < 200; index++) {
-    const x = getCooardinate(index, 7, 7, 7);
-    const y = getCooardinate(-index, 7, 7, 7);
+  for (let index = 0; index < 500; index++) {
+    const x = getCooardinate(index, 18, 6, 40);
+    const y = getCooardinate(-index, 18, 6, 40);
+
     if (x < y) {
-      printDot(x, redCircle, ' ');
+      console.log(repeat(' ', Math.min(x, y)) + orangeCircle + repeat('─', Math.abs(x - y)) + greenCircle);
       delay(1);
-      printDot(y, yellowCircle, '_');
     } else {
-      printDot(x, redCircle, '_');
+      console.log(repeat(' ', Math.min(x, y)) + greenCircle + repeat('─', Math.abs(x - y)) + orangeCircle);
       delay(1);
-      printDot(y, yellowCircle, ' ');
     }
   }
 }
-
-function printDot(value, symbol, char) {
-  let dnaString = '';
-  for (let index = 0; index < value; index++) {
-    dnaString += char;
-  }
-  dnaString += symbol;
-  console.log(dnaString);
-}
-
 
 findCoordinates();
