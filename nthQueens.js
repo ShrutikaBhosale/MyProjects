@@ -1,5 +1,4 @@
 const N = 4;
-const resultBoard = [];
 
 const makeBoard = (n) => {
   const row = Array(n).fill('.');
@@ -16,7 +15,7 @@ const isHorizontallySafe = (board, row) => {
 
 };
 
-const isRightDiagonallySafe = (board, row, col) => { //dirty
+const isRightDiagonallySafe = (board, row, col) => { //d
   let i = row;
   let j = col;
   while (i >= 0 && j < N) {
@@ -49,7 +48,7 @@ const isSafe = (board, row, col) => {
     && isRightDiagonallySafe(board, row, col);
 };
 
-const placeQueen = (board, row) => {
+const placeQueen = (board, row, resultBoard) => {
   if (row === N) {
     resultBoard.push(board.map(row => row.join('')));
     return;
@@ -58,16 +57,16 @@ const placeQueen = (board, row) => {
   for (let col = 0; col < N; col++) { //dirty
     if (isSafe(board, row, col)) {
       board[row][col] = 'Q';
-      placeQueen(board, row + 1);
+      placeQueen(board, row + 1, resultBoard);
       board[row][col] = '.';
     }
   }
 };
 
-
 const main = () => {
   const board = makeBoard(N);
-  placeQueen(board, 0);
+  const resultBoard = [];
+  placeQueen(board, 0, resultBoard);
   return resultBoard.at(-1).join('\n');
 };
 
