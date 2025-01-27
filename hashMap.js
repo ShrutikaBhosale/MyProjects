@@ -50,11 +50,12 @@ function deleteKey(map, key, size) {
 
   if (!bucket) {
     return "key not exists";
-  }
+  } //bucket shouldn't present their after deletion
 
   for (let i = 0; i < bucket.length; i++) {
     if (bucket[i][0] === key) {
       bucket.splice(i, 1);
+      // if bucket is empty after removal then delete that bucket itself
       return "key deleted";
     }
   }
