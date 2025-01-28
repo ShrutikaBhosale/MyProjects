@@ -1,90 +1,80 @@
-// if there are two keys with same name it should override
-// multiply by 32 substract previous hash value
-//  ---------DJB2 -----------
-function generateHashCode(key, size) {
-  let hashValue = 0;
+const fakeConsole = (...args) => {};
 
-  for (let i = 0; i < key.length; i++) {
-    hashValue = (hashValue << 5) - hashValue + key.charCodeAt(i);
+export class HashMap {
+  constructor(map) {
+    this.map = map;
+    this.size = map.length;
   }
 
-  return hashValue % size;
-}
+  generateHashCode(key) {
+    const hashValue = [...key].reduce((hash, char) => {
+      hash = (hash << 5) + hash + char.charCodeAt();
+      return hash;
+    }, 0);
 
-function set(map, key, value, size) {
-  const index = generateHashCode(key, size);
-
-  if (!map[index]) {
-    map[index] = [];
+    return hashValue % this.size;
   }
 
-  for (let i = 0; i < map[index].length; i++) {
-    if (map[index][i][0] === key) {
-      map[index][i][1] = value;
-      return map;
+  set(key, value) {
+    const index = this.generateHashCode(key);
+    if (!this.map[index]) {
+      this.map[index] = [];
+    }
+
+    const bucket = this.map[index];
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        bucket[key] = value;
+        return this.map;
+      }
+    }
+
+    bucket[key] = value;
+    return this.map;
+  }
+
+  get(key) {
+    const index = this.generateHashCode(key);
+    const bucket = this.map[index];
+
+    if (!bucket) {
+      return "key not exists";
+    }
+
+    return bucket[key];
+  }
+
+  deleteKey(key) {
+    const index = this.generateHashCode(key);
+    const bucket = this.map[index];
+
+    if (!bucket) {
+      return "key not exists"; //use fakeconsole and print it here
+    }
+
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        bucket.splice(i, 1);
+        if (bucket.length === 0) {
+          delete this.map[index];
+        }
+        return "key deleted";
+      }
     }
   }
 
-  map[index].push([key, value]);
-  return map;
-}
+  has(key) {
+    const index = this.generateHashCode(key);
+    const bucket = this.map[index];
 
-function get(map, key, size) {
-  const index = generateHashCode(key, size);
-  const bucket = map[index];
+    if (!bucket) {
+      return false;
+    }
 
-  if (!bucket) {
-    return "key not exists";
-  }
-
-  for (let i = 0; i < bucket.length; i++) {
-    if (bucket[i][0] === key) {
-      return bucket[i][1];
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        return true;
+      }
     }
   }
 }
-
-function deleteKey(map, key, size) {
-  const index = generateHashCode(key, size);
-  const bucket = map[index];
-
-  if (!bucket) {
-    return "key not exists";
-  } //bucket shouldn't present their after deletion
-
-  for (let i = 0; i < bucket.length; i++) {
-    if (bucket[i][0] === key) {
-      bucket.splice(i, 1);
-      // if bucket is empty after removal then delete that bucket itself
-      return "key deleted";
-    }
-  }
-}
-
-function has(map, key, size) {
-  const index = generateHashCode(key, size);
-  const bucket = map[index];
-
-  if (!bucket) {
-    return false;
-  }
-
-  for (let i = 0; i < bucket.length; i++) {
-    if (bucket[i][0] === key) {
-      return true;
-    }
-  }
-}
-
-function createHashMap(size) {
-  const map = new Array(size);
-  set(map, "name", "shrutika", size);
-  // return get(map, "age", size);
-  // return deleteKey(map, "age", size);
-  // return deleteKey(map, "name", size);
-  // return has(map, "age", size);
-  return has(map, "name", size);
-}
-
-const hashMap = createHashMap(10);
-console.log(hashMap);
